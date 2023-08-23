@@ -9,11 +9,12 @@ RUN pipenv requirements > requirements.txt
 
 # prod stage
 # this gets shipped to the robot
-ARG ARCH=linux/arm/v6
-FROM --platform=${ARCH} python:3.10.12-slim
+FROM python:3.10.12-slim
 WORKDIR /build
 
 # python dependencies setup
+RUN uname -a
+RUN pip install viam-sdk==0.4.8
 COPY --from=depends /setup/requirements.txt .
 RUN pip install --no-cache -r requirements.txt
 

@@ -11,7 +11,7 @@ jobs:
         steps:
         - uses: actions/checkout@v3
         - name: build
-          run: docker build -t $VERSION .
+          run: docker build -t $VERSION --platform linux/arm64 .
     upload:
         if: github.event_name == 'release'
         runs-on: ubuntu-latest
