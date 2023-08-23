@@ -1,24 +1,40 @@
 on:
-    push:
-    release:
+  push:
+  release:
 
 env:
-    DOCKER_TAG: ghcr.io/${{ github.repository }}
-    VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{0}-{1}', github.ref_name, github.run_number) }}
+  DOCKER_TAG: ghcr.io/${{ github.repository }}
+  VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{0}-{1}', github.ref_name, github.run_number) }}
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v3
-        - uses: docker/setup-qemu-action@v2
-        - name: build
-          run: docker build --platform linux/arm64 -t $DOCKER_TAG:$VERSION .
-    upload:
-        if: github.event_name == 'release'
-        runs-on: ubuntu-latest
-        steps:
-        - name: push docker
-          run: echo todo
-        - name: upload module
-          run: echo todo
+  container:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/setup-qemu-action@v2
+    - name: build
+      run: docker build --platform linux/arm64 -t $DOCKER_TAG:$VERSION .
+    - uses: docker/build-push-action@v4
+      with:
+        file: etc/packaging/32bit/Dockerfile
+        tags: $DOCKER_TAG:$VERSION
+        pull: true
+        platforms: linux/amd64,linux/arm64
+        push: ${{ github.event_name == 'release' }}
+  module:
+    strategy:
+      matrix:
+        platform: [amd64, arm64]
+    runs-on: ubuntu-latest
+    steps:
+    - name: build
+      run: |
+        TAG=$DOCKER_TAG make module.tar.gz
+    - uses: viamrobotics/upload-module@main
+      if: github.event_name == 'release'
+      with:
+        module-path: module.tar.gz
+        org-id: 6efeb7e5-91aa-4187-8ed3-e84764726078
+        platform: linux/${{ matrix.platform }}
+        version: ${{ github.ref_name }}
+        cli-config-secret: ${{ secrets.cli_config }}
