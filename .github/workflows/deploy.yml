@@ -8,11 +8,12 @@ env:
 
 jobs:
     build:
-        runs-on: buildjet-2vcpu-ubuntu-2204-arm
+        runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v3
+        - uses: docker/setup-qemu-action@v2
         - name: build
-          run: docker build -t $DOCKER_TAG:$VERSION .
+          run: docker build --platform linux/arm64 -t $DOCKER_TAG:$VERSION .
     upload:
         if: github.event_name == 'release'
         runs-on: ubuntu-latest
