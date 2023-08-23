@@ -1,0 +1,21 @@
+on:
+    push:
+    release:
+
+env:
+    VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{1}-{2}', github.ref_name, github.ref) }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: build
+          run: docker build -t $VERSION .
+    upload:
+        if: github.event_name == 'release'
+        runs-on: ubuntu-latest
+        steps:
+        - name: push docker
+          run: echo todo
+        - name: upload module
+          run: echo todo

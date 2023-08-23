@@ -1,6 +1,6 @@
 # dependencies stage
 # this converts the pipenv dependencies to requirements.txt so we don't have to bundle pipenv in the prod image
-FROM python:3.10-slim as depends
+FROM python:3.10.12-slim as depends
 
 WORKDIR /setup
 RUN pip install pipenv
@@ -10,7 +10,7 @@ RUN pipenv requirements > requirements.txt
 # prod stage
 # this gets shipped to the robot
 ARG ARCH=linux/arm/v6
-FROM --platform=${ARCH} python:3.10-slim
+FROM --platform=${ARCH} python:3.10.12-slim
 WORKDIR /build
 
 # python dependencies setup
