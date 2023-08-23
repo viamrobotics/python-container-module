@@ -1,0 +1,4 @@
+__pycache__/
+*-img.tar
+module.tar.gz
+run.sh
