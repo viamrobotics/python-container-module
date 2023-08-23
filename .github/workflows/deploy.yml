@@ -3,15 +3,16 @@ on:
     release:
 
 env:
-    VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{0}-{1}', github.ref_name, github.ref) }}
+    DOCKER_TAG: ghcr.io/${{ github.repository }}
+    VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{0}-{1}', github.ref_name, github.run_number) }}
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: buildjet-2vcpu-ubuntu-2204-arm
         steps:
         - uses: actions/checkout@v3
         - name: build
-          run: docker build -t $VERSION --platform linux/arm64 .
+          run: docker build -t $DOCKER_TAG:$VERSION .
     upload:
         if: github.event_name == 'release'
         runs-on: ubuntu-latest
