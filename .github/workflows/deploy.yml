@@ -15,7 +15,6 @@ jobs:
     - uses: docker/setup-buildx-action@v2
     - uses: docker/build-push-action@v4
       with:
-        file: etc/packaging/32bit/Dockerfile
         tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
         pull: true
         platforms: linux/amd64,linux/arm64
