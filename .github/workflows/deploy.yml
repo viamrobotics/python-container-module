@@ -3,7 +3,7 @@ on:
     release:
 
 env:
-    VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{1}-{2}', github.ref_name, github.ref) }}
+    VERSION: ${{ github.event_name == 'release' && github.ref_name || format('{0}-{1}', github.ref_name, github.ref) }}
 
 jobs:
     build:
