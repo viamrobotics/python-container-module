@@ -32,7 +32,7 @@ jobs:
     needs: [container]
     strategy:
       matrix:
-        platform: [amd64, arm64]
+        platform: [arm64] # [amd64, arm64]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
