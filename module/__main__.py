@@ -1,4 +1,4 @@
-import asyncio, logging
+import asyncio, logging, subprocess
 from typing import Any, Dict, Mapping, Optional
 
 from viam.components.sensor import Sensor
@@ -12,7 +12,7 @@ from viam.resource.registry import Registry, ResourceCreatorRegistration
 logger = logging.getLogger(__name__)
 
 class MySensor(Sensor):
-    MODEL = Model(ModelFamily("viam","wifi_sensor"), "linux")
+    MODEL = Model(ModelFamily("viam","disk_sensor"), "linux")
 
     @classmethod
     def new(cls, config: ComponentConfig, dependencies: Mapping[ResourceName, ResourceBase]):
@@ -20,12 +20,11 @@ class MySensor(Sensor):
         return sensor
 
     async def get_readings(self, extra: Optional[Dict[str, Any]] = None, **kwargs) -> Mapping[str, Any]:
-        logger.info("get_readings top")
-        with open("/proc/net/wireless") as wifi_stats:
-            content = wifi_stats.readlines()
-        logger.info("get_readings ok read")
-        wifi_signal = [x for x in content[2].split(" ") if x != ""]
-        return {"link": wifi_signal[2], "level": wifi_signal[3], "noise": wifi_signal[4]}
+        lines = subprocess.check_output(['df']).splitlines()[1:]
+        logger.info("get_readings ok %d lines", len(lines))
+        return {
+            (row := line.strip().split())[-1]: row[-2] for line in lines
+        }
 
     async def get_geometries(self):
         return []

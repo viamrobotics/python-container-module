@@ -6,7 +6,7 @@
   "models": [
     {
       "api": "rdk:component:sensor",
-      "model": "viam:wifi_sensor:linux"
+      "model": "viam:disk_sensor:linux"
     }
   ],
   "entrypoint": "run.sh"
