@@ -2,7 +2,6 @@ import asyncio
 from typing import Any, Dict, Mapping, Optional
 
 from viam.components.sensor import Sensor
-from viam.operations import run_with_operation
 from viam.proto.app.robot import ComponentConfig
 from viam.proto.common import ResourceName
 from viam.resource.base import ResourceBase
@@ -23,6 +22,9 @@ class MySensor(Sensor):
             content = wifi_stats.readlines()
         wifi_signal = [x for x in content[2].split(" ") if x != ""]
         return {"link": wifi_signal[2], "level": wifi_signal[3], "noise": wifi_signal[4]}
+
+    async def get_geometries(self):
+        return []
 
 # Anything below this line is optional and will be replaced later, but may come in handy for debugging and testing.
 # To use, call `python wifi_sensor.py` in the command line while in the `src` directory.

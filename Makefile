@@ -8,7 +8,7 @@ push: build
 
 run.sh: run.envsubst.sh
 	# render entrypoint script from template
-	cat $< | TAG=$(TAG) envsubst > $@
+	cat $< | TAG=$(TAG) DOLLAR=$$ envsubst > $@
 	chmod +x $@
 
 module.tar.gz: run.sh
