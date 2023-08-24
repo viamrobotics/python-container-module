@@ -1,5 +1,8 @@
 # py-container-module
 
+> [!NOTE]
+> Work in progress -- not officially released yet
+
 This is an example of using Docker to bundle a Python module as a container, and then running it on a robot using Podman. (Podman is a lightweight Docker alternative).
 
 ## Packages must be public
