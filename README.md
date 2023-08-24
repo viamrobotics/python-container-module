@@ -1,12 +1,12 @@
 # py-container-module
 
-This is an example of using Podman to bundle a python module as a container.
+This is an example of using Docker to bundle a Python module as a container, and then running it on a robot using Podman. (Podman is a lightweight Docker alternative).
 
-(Podman is a lightweight docker alternative).
+## Packages must be public
 
 ## System setup
 
-The device you're deploying *to* needs to have podman installed. On the raspberry pi (or any debian based system), you can run:
+The device you're deploying *to* needs to have podman or docker installed. On the raspberry pi (or any debian based system), you can run:
 
 ```sh
 sudo apt-get install podman

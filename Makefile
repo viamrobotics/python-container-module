@@ -1,7 +1,4 @@
-MODULE_NAME ?= python-container-module
-VERSION ?= 0.0.1
-REPO ?= viam-labs/$(MODULE_NAME)
-TAG ?= ghcr.io/$(REPO):$(VERSION)
+TAG ?= ghcr.io/USER/REPO:0.0.0
 
 build: Dockerfile module/*
 	podman build -t $(TAG) .
