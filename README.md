@@ -7,7 +7,9 @@ This is an example of using Docker to bundle a Python module as a container, and
 
 ## Packages must be public
 
-## System setup
+The `podman run` step will fail if your ghcr package is not public. Look in 'package settings' (bottom right) for your package.
+
+## Target system setup
 
 The device you're deploying *to* needs to have podman or docker installed. On the raspberry pi (or any debian based system), you can run:
 
@@ -15,12 +17,32 @@ The device you're deploying *to* needs to have podman or docker installed. On th
 sudo apt-get install podman
 ```
 
-## Using docker instead of podman
+## Robot config
 
-The save, load and run commands should be approximately the same. Post an issue if you run into trouble.
+Replace `module_id` and `model` with the values you choose for your module.
 
-## Using a registry instead of bundling the 
+```json
+{
+  "modules": [
+    {
+      "type": "registry",
+      "version": "latest",
+      "name": "disk",
+      "module_id": "viam:python-container-example"
+    }
+  ],
+  "components": [
+    {
+      "depends_on": [],
+      "name": "my-sensor",
+      "type": "sensor",
+      "attributes": {},
+      "model": "viam:disk_sensor:linux"
+    }
+  ]
+}
+```
 
-If you have a preferred container registry (for example ghcr.io on github), you can use the registry instead of bundling the entire module.
+## Bundling the container instead of using a registry
 
-Post an issue to this repo if you want instructions for this.
+This example repo uses ghcr.io as a package registry. An alternative is to use docker / podman `save` and `load` commands to bundle the container image with the module and restore it on the target machine.
