@@ -41,7 +41,7 @@ jobs:
     - name: build
       run: |
         TAG=$DOCKER_TAG:$VERSION make module.tar.gz
-    - uses: viamrobotics/upload-module@no-org-id
+    - uses: viamrobotics/upload-module@main
       if: github.event_name == 'release'
       with:
         module-path: module.tar.gz
