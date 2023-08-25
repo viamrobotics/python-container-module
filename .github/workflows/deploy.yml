@@ -31,7 +31,7 @@ jobs:
   module:
     needs: [container]
     # todo: remove concurrency group once APP-2549 is fixed
-    concurrency: no-simultaneous-upload
+    concurrency: no-simultaneous-upload-${{ github.ref_name }}-${{ github.run_number }}
     strategy:
       matrix:
         platform: [amd64, arm64]
