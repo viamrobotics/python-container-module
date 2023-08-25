@@ -30,9 +30,11 @@ jobs:
         push: ${{ github.event_name == 'release' }}
   module:
     needs: [container]
+    # todo: remove concurrency group once APP-2549 is fixed
+    concurrency: no-simultaneous-upload
     strategy:
       matrix:
-        platform: [arm64] # [amd64, arm64]
+        platform: [amd64, arm64]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -44,5 +46,5 @@ jobs:
       with:
         module-path: module.tar.gz
         platform: linux/${{ matrix.platform }}
-        version: ${{ github.ref_name }}
+        version: ${{ github.event_name == 'release' && github.ref_name || format('0.0.0-{0}.{1}', github.ref_name, github.run_number) }}
         cli-config-secret: ${{ secrets.cli_config }}
