@@ -39,11 +39,10 @@ jobs:
     - name: build
       run: |
         TAG=$DOCKER_TAG:$VERSION make module.tar.gz
-    - uses: viamrobotics/upload-module@main
-      if: github.event_name == 'release'
+    - uses: viamrobotics/upload-module@no-org-id
+      # if: github.event_name == 'release'
       with:
         module-path: module.tar.gz
-        org-id: e76d1b3b-0468-4efd-bb7f-fb1d2b352fcb
         platform: linux/${{ matrix.platform }}
         version: ${{ github.ref_name }}
         cli-config-secret: ${{ secrets.cli_config }}
