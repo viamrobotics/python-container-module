@@ -63,3 +63,7 @@ Replace `module_id` and `model` with the values you choose for your module.
 ## Bundling the container instead of using a registry
 
 This example repo uses ghcr.io as a package registry. An alternative is to use docker / podman `save` and `load` commands to bundle the container image with the module and restore it on the target machine.
+
+## Forking this repo
+
+If you fork this and want to deploy to a robot, you'll need to change all references to 'viam' and optionally set up secrets for CI. Follow the [fork instructions](https://github.com/viam-labs/python-example-module#forking-this-repo) from the Python example repo.
