@@ -1,5 +1,5 @@
 {
-  "name": "viam:python-container-example",
+  "module_id": "viam:python-container-example",
   "visibility": "public",
   "url": "https://github.com/viam-labs/python-container-module",
   "description": "Example of deploying a python module with docker",
